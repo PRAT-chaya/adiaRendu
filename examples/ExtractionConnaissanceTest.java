@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author 21600639 : DENOUAL Axel
+ * @author 21910036 : ROUSSEAU Alexy
+ * @author 21907858 : SABATIER Brian
+ * 
  */
+
 package examples;
 
 import extractionConnaissance.*;
@@ -14,13 +17,9 @@ import java.util.Set;
 import representation.Rule;
 import representation.Variable;
 
-/**
- *
- * @author axel
- */
 public class ExtractionConnaissanceTest {
     
-        private URL url;
+    private URL url;
 
     public ExtractionConnaissanceTest(String filename) {
         url = getClass().getResource(filename);
@@ -30,10 +29,6 @@ public class ExtractionConnaissanceTest {
     public URL getUrl() {
         return url;
     }
-    
-    
-    
-    
     
     public static void main(String[] args) {
         
@@ -76,5 +71,4 @@ public class ExtractionConnaissanceTest {
             System.out.print(frequentItemset.get(itemSet) + "\n");
         }
     }
-    
 }
