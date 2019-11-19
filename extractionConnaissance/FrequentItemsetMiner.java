@@ -15,8 +15,7 @@ import java.util.Set;
 import representation.Variable;
 
 /**
- *
- * @author ordinaute
+ * Classe permettant de trouver des Motifs fréquents
  */
 public class FrequentItemsetMiner {
 
@@ -29,9 +28,18 @@ public class FrequentItemsetMiner {
         minedScope.addAll(db.getVariables());
     }
 
+    /**
+     * Retourne les ItemSet fréquents en injectant en entrée une fréquence minimale
+     * @param minFreq
+     * @return 
+     */
     public Map<Set<Variable>, Integer> frequentItemsets(int minFreq) {
         Map<Set<Variable>, Integer> frequentItemsets = new HashMap();
         Map<Variable, Integer> frequentSingletons = frequentSingletons(minFreq);
+        
+        /**
+         * On parcourt nos singleton
+         */
         for (Variable singleton : frequentSingletons.keySet()) {
             Set<Variable> varset = new HashSet();
             varset.add(singleton);
@@ -40,6 +48,10 @@ public class FrequentItemsetMiner {
 
         boolean freqEnough = true;
 
+        /**
+         * R (profondeur de l'arbre de recherche) = 2 car on a déjà tous les singletons fréquents trouvés
+         * On examine désormais les paires
+         */
         for (int r = 2; r <= frequentSingletons.keySet().size() && freqEnough; r++) {
             Variable vars[] = new Variable[frequentSingletons.keySet().size()];
             int i = 0;
@@ -47,9 +59,17 @@ public class FrequentItemsetMiner {
                 vars[i] = var;
                 i++;
             }
+            
+             /**
+             * Génération des candidats en fonction du nombre de variables souhaité dans le motif (A-B-C = 3 etc)
+             */
             List<Variable[]> toCheck = new ArrayList();
             buildCombination(vars, vars.length, r, toCheck);
             Set<Set<Variable>> tuples = new HashSet();
+            
+            /**
+             * Conversion d'un List<Variable[]> en Set de Variables
+             */
             for (Variable[] tuple : toCheck) {
                 tuples.add(new HashSet<>(Arrays.asList(tuple)));
             }
@@ -121,12 +141,19 @@ public class FrequentItemsetMiner {
         return tuplesFreq;
     }
 
+    /**
+     * Méthode qui fait appel à la méthode statique frequentSingletons
+     * Utile car beaucoup plus simple à utiliser en appel (utilise les variables de l'instance courante)
+     * @param minFreq
+     * @return 
+     */
     private Map<Variable, Integer> frequentSingletons(int minFreq) {
         return frequentSingletons(minFreq, this.db.getVariables(), this.db.getTransactions());
     }
 
     /**
      * Retourne en Map les singletons passant le seuil de fréquence.
+     * Méthode statique (gère la logique)
      *
      * @param minFreq La fréquence minimum des singletons retournés
      * @param vars Les variables dont on veut évaluer la fréquence
