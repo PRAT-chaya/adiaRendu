@@ -184,7 +184,7 @@ public class AssociationRuleMiner {
         combinationUtil(arr, data, 0, n - 1, 0, r, output);
     }
 
-    private static void printBooleanRule(Rule rule) {
+    public static void printBooleanRule(Rule rule) {
         System.out.print("Rule: ");
         for (RestrictedDomain domain : rule.getPremise()) {
             System.out.print(domain.getVariable().getName());

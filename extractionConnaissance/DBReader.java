@@ -35,7 +35,7 @@ public class DBReader {
             reader.close();
             return res;
         }catch(IOException e){
-            System.out.println("Pas content :{");
+            System.out.println(e.toString());
             return null;
         }
     }
@@ -77,7 +77,7 @@ public class DBReader {
     }
     
     public static void main(String[] args) {
-        Set<Variable> variables = new HashSet();
+        /*Set<Variable> variables = new HashSet();
         String variableLine = "angine;prise_sirop;fièvre;œdème;fatigué(e);toux;vacciné(e);hypothermie;allergie_sucre;boutons;grippe;virus;";
         for (String variableName: variableLine.split(";")) {
             variables.add(new Variable(variableName,""));
@@ -88,6 +88,6 @@ public class DBReader {
         System.out.println(db);
         BooleanDatabase boolDB = Database.booleanConvert(db);
         System.out.println("conversion success");
-        System.out.print(boolDB);
+        System.out.print(boolDB);*/
     }
 }

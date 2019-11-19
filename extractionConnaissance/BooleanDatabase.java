@@ -43,4 +43,21 @@ public class BooleanDatabase {
     public List<Map<Variable, Boolean>> getTransactions() {
         return transactions;
     }
+
+
+   
+    
+    @Override
+    public String toString() {
+        String res = "BooleanDatabase : \n";
+        for (int i = 0; i < 20; i++) {
+            Map<Variable, Boolean> instance = this.getTransactions().get(i);
+            for(Variable var : instance.keySet()){
+                res += var.getName() + " : " + instance.get(var) + "; ";
+            }
+            res += "\n";
+        }
+        res+=("nombre d'instnces: " + this.transactions.size());
+        return res;
+    }
 }

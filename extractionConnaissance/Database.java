@@ -44,7 +44,7 @@ public class Database {
                         break;
                         
                     default:
-                        Variable newvar = new Variable(var.getName()+"_"+instance.get(var),"True","False");
+                        Variable newvar = new Variable(var.getName()+"_"+instance.get(var),"oui","non");
                         Variable existantVar = ListContainsVar(booleanDB.getVariables(), newvar);
                         if(existantVar != null){
                             
