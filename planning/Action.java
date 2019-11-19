@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author 21600639 : DENOUAL Axel
+ * @author 21910036 : ROUSSEAU Alexy
+ * @author 21907858 : SABATIER Brian
+ * 
  */
+
 package planning;
 
 import java.util.HashSet;
@@ -11,10 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import representation.Variable;
 
-/**
- *
- * @author 21600639
- */
 public class Action {
     
     protected Set<ActionRule>  rules;
@@ -85,8 +84,4 @@ public class Action {
         ts += '}';
         return ts;
     }
-    
-    
-    
-    
 }
