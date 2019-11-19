@@ -20,7 +20,6 @@ public class Action {
     protected final String name;
     protected final int cost;
     
-
     public Action() {
         this.rules = new HashSet();
         this.name = "";
@@ -60,7 +59,12 @@ public class Action {
     public void addRule(ActionRule rule){
         this.rules.add(rule);
     }
-       
+    
+    /**
+     * Un etat est applicable si au moins une règle l'est (disjonction)
+     * @param state
+     * @return 
+     */
     public boolean is_applicable(State state){
         for(ActionRule rule : this.rules){
             if(state.satisfies(rule.getPreconditions())){
