@@ -1,17 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author 21600639 : DENOUAL Axel
+ * @author 21910036 : ROUSSEAU Alexy
+ * @author 21907858 : SABATIER Brian
+ * 
  */
+
 package representation;
 
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author ordinaute
- */
 public class BinaryInferiorityConstraint extends BinaryConstraint {
 
     public BinaryInferiorityConstraint(RestrictedDomain term1, RestrictedDomain term2) {
