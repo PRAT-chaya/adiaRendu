@@ -56,16 +56,18 @@ public class PlanningProblemWithCost extends PlanningProblem {
         Map<State, State> father = new HashMap();
         Map<State, Action> plan = new HashMap();
         Set<State> goals = new HashSet();
-        Set<State> open = new HashSet();
-        open.add(problem.getInitialState());
+        Set<State> open = new HashSet(); // La liste des ouverts est vide par défaut
+        open.add(problem.getInitialState()); // On remplit notre liste d'ouverts
         distance.put(problem.getInitialState(), 0);
         father.put(problem.getInitialState(), null);
 
+        // Tant que notre liste d'ouverts n'est pas vide on continue l'exploration
         while (!open.isEmpty()) {
             System.out.println(open.size());
             State state = argmin(open, distance);
             problem.increaseDijkstraProbe();
-            open.remove(state);
+            open.remove(state); // On supprime des ouverts l'etat
+            // Si l'etat satisfait notre but et si notre liste de buts ne contient pas notre etat on l'ajoute 
             if (state.satisfies(problem.getGoal())) {
                 if (!goals.contains(state)) {
                     goals.add(state);
@@ -77,23 +79,27 @@ public class PlanningProblemWithCost extends PlanningProblem {
                     State next = state.apply(action);
                     next.printAffectation();
                     if (!distance.containsKey(next)) {
+                        // Si on ne connaît pas la distance de notre etat on lui applique celle maximale
                         distance.put(next, Integer.MAX_VALUE);
                     }
+                    // Si notre distance au prochain etat est supérieure à celle actuelle + celle du coût on
+                    // "avance" dans la résolution du problème
                     if (distance.get(next) > distance.get(state) + action.getCost()) {
-                        distance.replace(next, distance.get(state) + action.getCost());
+                        distance.replace(next, distance.get(state) + action.getCost()); // On met à jour notre distance
                         System.out.println(distance.get(next));
+                        // Si le père ne contient pas le nouvel etat on l'ajoute
                         if (!father.containsKey(next)) {
                             father.put(next, state);
                         } else {
-                            father.replace(next, state);
+                            father.replace(next, state); // Sinon on le met à jour
                         }
                         if (!plan.containsKey(next)) {
-                            plan.put(next, action);
+                            plan.put(next, action); // Si le plan ne contient pas l'Etat on l'ajoutre
                         } else {
-                            plan.put(next, action);
+                            plan.put(next, action); // Sinon on le MAJ
                         }
                         if (!open.contains(next)) {
-                            open.add(next);
+                            open.add(next); // Enfin si les ouverts ne contient pas l'Etat on l'ajoute
                         }
                     }
                 }
