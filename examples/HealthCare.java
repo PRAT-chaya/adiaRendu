@@ -1,4 +1,11 @@
-  //TP GREGORY BONNET PART2
+/**
+ *
+ * @author 21600639 : DENOUAL Axel
+ * @author 21910036 : ROUSSEAU Alexy
+ * @author 21907858 : SABATIER Brian
+ * 
+ */
+
 package examples;
 
 import java.util.ArrayList;
@@ -13,10 +20,6 @@ import planning.PlanningProblemWithCost;
 import planning.State;
 import representation.Variable;
 
-/**
- *
- * @author axel
- */
 public class HealthCare {
 
     public static void main(String[] args) {
