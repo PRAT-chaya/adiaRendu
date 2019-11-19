@@ -95,7 +95,7 @@ public class GeneralizedArcConsistency {
                 temp.addAll(domain.getSubdomain());
                 for (String value : temp) {
                     if (!GeneralizedArcConsistency.isConsistent(var, value, constraint, domains)) {
-                        // faites les modification nécéssaire
+                        // faites les modifications nécéssaires
                         hasChanged = true;
                         // enlever toutes les valeurs non viables
                         domain.getSubdomain().remove(value);
