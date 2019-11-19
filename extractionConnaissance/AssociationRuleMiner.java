@@ -18,13 +18,16 @@ import representation.StrictRule;
 import representation.Variable;
 
 /**
- *
+ * On essaie de déterminer des règles d'association à partir de motifs fréquents
+ * CAD que pour une source donnnées donnée
+ * A partir de frequentItemSetMiner
  * @author ordinaute
  */
 public class AssociationRuleMiner {
 
     private Map<Set<Variable>, Integer> frequentItemsets;
     private BooleanDatabase db;
+    // Scope représente toutes les Variables qui apparaissent dans les ItemSet fréquents, préalablements extraits avec frequentItemSetMiner()
     private Set<Variable> scope;
 
     public AssociationRuleMiner(BooleanDatabase db, Map<Set<Variable>, Integer> frequentItemsets, Set<Variable> scope) {
@@ -33,12 +36,30 @@ public class AssociationRuleMiner {
         this.scope = scope;
     }
 
+    
+    /**
+     * Méthode permettant de miner des règles strictes
+     * Générer des règles candidates et vérifier si elles sont intéressantes
+     * Appelle rule miner avec uniquement des règles strictes
+     * @param minFreq
+     * @param minConf
+     * @return 
+     */
     public Set<Rule> strictRuleMiner(int minFreq, double minConf) {
         return AssociationRuleMiner.confidenceFilter(
                 minConf, this.frequentItemsets,
                 ruleMiner(minFreq, this.db.getTransactions(), this.frequentItemsets, this.scope, true));
     }
 
+    /**
+     * Génère les règles candidates
+     * @param minFreq
+     * @param transactions
+     * @param frequentItemsets
+     * @param scope
+     * @param strictRule
+     * @return 
+     */
     public static Map<Rule, Integer> ruleMiner(int minFreq,
             List<Map<Variable, Boolean>> transactions,
             Map<Set<Variable>, Integer> frequentItemsets,
@@ -103,6 +124,14 @@ public class AssociationRuleMiner {
         return minedRules;
     }
 
+    /**
+     * Filtrer les règles à partir de leur confiance
+     * 
+     * @param minConf
+     * @param frequentItemsets
+     * @param minedRules
+     * @return 
+     */
     public static Set<Rule> confidenceFilter(double minConf, Map<Set<Variable>, Integer> frequentItemsets, Map<Rule, Integer> minedRules) {
         Set<Rule> filteredRules = new HashSet();
         filteredRules.addAll(minedRules.keySet());
@@ -117,6 +146,13 @@ public class AssociationRuleMiner {
         return filteredRules;
     }
 
+    /**
+     * 
+     * @param itemset
+     * @param r
+     * @param strictRule
+     * @return 
+     */
     public static Set<Rule> rulesBuilder(Set<Variable> itemset, int r, boolean strictRule) {
         Set<Rule> rules = new HashSet();
         //Set<Variable> varset = new HashSet();
