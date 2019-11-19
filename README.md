@@ -4,9 +4,9 @@
 
 # Rendu du Fil Rouge du module d'Aide à la décision et Intelligence artificielle :
 
-Le package examples contient quatres classes exécutables qui utilisent les classes des packages correspondants aux différentes parties étudiées en cours.
+Le package examples contient quatres classes exécutables qui utilisent les classes des packages correspondant aux différentes parties étudiées en cours.
 
-La classe Test.java sert à démontrer que la classe Rule fonctionne conformement à l'énoncé du TP. Elle teste également notre implementation de l'algorithme de Backtrack sur un problème court.
+La classe Test.java sert à démontrer que la classe Rule fonctionne conformement à l'énoncé du TP. Elle teste également notre implémentation de l'algorithme de Backtrack sur un problème court.
 
 D'autres classes de tests mineurs ont été implémentées dans les packages correspondant aux parties du TP étudiées.
 
