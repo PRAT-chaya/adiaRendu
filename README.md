@@ -8,6 +8,8 @@ Le package examples contient quatres classes exécutables qui utilisent les clas
 
 La classe Test.java sert à démontrer que la classe Rule fonctionne conformement à l'énoncé du TP. Elle teste également notre implémentation de l'algorithme de Backtrack sur un problème court.
 
+La classe AssociationRuleMinerExample.java permet de tester notre implémentation de l'extraction de motifs fréquents et de l'extraction de règles d'association. Exécuter la classe montre les transactions du petit exemple de cours, les motifs fréquents qui en sont extraits puis les règles qu'on extrait.
+
 La classe Examples teste le Backtrack et affiche les solutions trouvées avec le problème "fil rouge".
 Le Backtrack implémente une étape de filtrage par Arc consistance généralisée sur les domaines initiaux des variables à assigner.
 
