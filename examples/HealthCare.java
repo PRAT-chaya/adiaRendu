@@ -40,7 +40,7 @@ public class HealthCare {
         }
         PlanningProblem pb = new PlanningProblem(initialState, finalState.getAffectation(), actions);
         pb.printProblem();
-        dfsPrint(pb);
+        dfsPrint(pb, 4);
         bfsPrint(pb);
         PlanningProblemWithCost pbwc = new PlanningProblemWithCost(initialState, finalState.getAffectation(), actions);
         aStarPrint(pbwc);
@@ -217,10 +217,10 @@ public class HealthCare {
         return initialState;
     }
 
-    private static void dfsPrint(PlanningProblem pb) {
+    private static void dfsPrint(PlanningProblem pb, int maxDepth) {
         System.out.println();
         System.out.println("***DFS***");
-        pb.printPlan(pb.dfs(4));
+        pb.printPlan(pb.dfs(maxDepth));
         System.out.println(pb.getDfsProbe());
     }
 
