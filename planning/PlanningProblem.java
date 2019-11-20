@@ -156,8 +156,12 @@ public class PlanningProblem {
         return reverse(stackPlan);
     }
     
-    // On inverse notre pile pour obtenir l'etat final à la fin
-    protected static Deque<Action> reverse(Deque<Action> plan){
+    /**
+     * On inverse notre pile pour obtenir l'etat final au début
+     * @param plan
+     * @return 
+     */ 
+     protected static Deque<Action> reverse(Deque<Action> plan){
         Deque<Action> reversePlan = new LinkedList();
         while (!plan.isEmpty()) {
             reversePlan.push(plan.pop());
