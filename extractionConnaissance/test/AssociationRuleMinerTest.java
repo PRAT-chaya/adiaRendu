@@ -24,6 +24,7 @@ import representation.Rule;
 public class AssociationRuleMinerTest {
 
     public static void main(String[] args) {
+        // Création de variables booléennes
         List<Variable> vars = new ArrayList();
         vars.add(Variable.makeBooleanVariable("A"));
         vars.add(Variable.makeBooleanVariable("B"));
@@ -31,6 +32,8 @@ public class AssociationRuleMinerTest {
         vars.add(Variable.makeBooleanVariable("D"));
         vars.add(Variable.makeBooleanVariable("E"));
 
+        // Création de nos transactions et définition
+        // D'une fréquence minimale désirée
         int minFreq = 3;
         Map<Variable, Boolean> transaction1 = new HashMap();
         transaction1.put(vars.get(0), Boolean.TRUE);
@@ -61,6 +64,7 @@ public class AssociationRuleMinerTest {
         Map<Variable, Boolean> transaction6 = new HashMap();
         transaction5.put(vars.get(4), Boolean.TRUE);
 
+        // Ajout de nos transactions dans une liste
         List<Map<Variable, Boolean>> transactions = new ArrayList();
         transactions.add(transaction1);
         transactions.add(transaction2);
@@ -70,6 +74,7 @@ public class AssociationRuleMinerTest {
         transactions.add(transaction6);
         BooleanDatabase db = new BooleanDatabase(vars, transactions);
         FrequentItemsetMiner fiMiner = new FrequentItemsetMiner(db);
+        // Extrait les motifs fréquents de ces donnéees (au moins deux fois)
         Map<Set<Variable>, Integer> frequentItemsets = fiMiner.frequentItemsets(2);
         for(Set<Variable> varset : frequentItemsets.keySet()){
             System.out.print("Itemset: ");
