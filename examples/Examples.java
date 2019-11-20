@@ -120,7 +120,10 @@ public class Examples {
         premise9.add(new RestrictedDomain(fievre, "moyen", "haut"));
         List<RestrictedDomain> conclusion9 = new ArrayList();
         conclusion9.add(new RestrictedDomain(hypothermie, Variable.TRUE));
-        IncompatibilityConstraint rule9 = new IncompatibilityConstraint(premise9, conclusion9);
+        List<RestrictedDomain> terms9 = new ArrayList();
+        terms9.addAll(premise9);
+        terms9.addAll(conclusion9);
+        IncompatibilityConstraint rule9 = new IncompatibilityConstraint(terms9);
         System.out.println("Règle9: \'On ne peut pas à la fois avoir une fièvre haute"
                 + " ou moyenne et être en hypothermie\'");
 
