@@ -63,7 +63,7 @@ public class PlanningProblemWithCost extends PlanningProblem {
 
         // Tant que notre liste d'ouverts n'est pas vide on continue l'exploration
         while (!open.isEmpty()) {
-            System.out.println(open.size());
+            //System.out.println(open.size());
             State state = argmin(open, distance);
             problem.increaseDijkstraProbe();
             open.remove(state); // On supprime des ouverts l'etat
@@ -71,13 +71,14 @@ public class PlanningProblemWithCost extends PlanningProblem {
             if (state.satisfies(problem.getGoal())) {
                 if (!goals.contains(state)) {
                     goals.add(state);
+                    continue;
                 }
                 System.out.println("Goal reached");
             }
             for (Action action : problem.getAvailableActions()) {
                 if (action.is_applicable(state)) {
                     State next = state.apply(action);
-                    next.printAffectation();
+                    //next.printAffectation();
                     if (!distance.containsKey(next)) {
                         // Si on ne connaît pas la distance de notre etat on lui applique celle maximale
                         distance.put(next, Integer.MAX_VALUE);
@@ -86,7 +87,7 @@ public class PlanningProblemWithCost extends PlanningProblem {
                     // "avance" dans la résolution du problème
                     if (distance.get(next) > distance.get(state) + action.getCost()) {
                         distance.replace(next, distance.get(state) + action.getCost()); // On met à jour notre distance
-                        System.out.println(distance.get(next));
+                        //System.out.println(distance.get(next));
                         // Si le père ne contient pas le nouvel etat on l'ajoute
                         if (!father.containsKey(next)) {
                             father.put(next, state);
