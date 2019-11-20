@@ -6,32 +6,86 @@
  * 
  */
 package representation;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import satisfiability.GeneralizedArcConsistency;
 
-public class Disjunction extends Rule implements Constraint {
-    
-    public Disjunction(List<RestrictedDomain> premise, List<RestrictedDomain> conclusion) {
-        super(premise, conclusion);
+public class Disjunction implements Constraint{
+
+    private Set<Variable> scope;
+    private Map<Variable, Set<String>> terms;
+
+    public Disjunction(Map<Variable, Set<String>> terms) {
+        this.terms = terms;
+        this.scope = new HashSet();
+        for (Variable var : terms.keySet()) {
+            scope.add(var);
+        }
     }
-    
+
+    public Disjunction(List<RestrictedDomain> terms) {
+        this.terms = new HashMap();
+        for (RestrictedDomain domain : terms) {
+            this.terms.put(domain.getVariable(), domain.getSubdomain());
+        }
+        this.scope = new HashSet();
+        for (Variable var : this.terms.keySet()) {
+            this.scope.add(var);
+        }
+    }
+
     @Override
     public boolean isSatisfiedBy(List<RestrictedDomain> assessment) {
-        // Pour chaque variable de l'instance testée
-        for (int i = 0; i < assessment.size(); i++) {
-            Variable assessmentPremVar = assessment.get(i).getVariable();
-            // Si la prémisse est concernée par la variable
-            for (int x = 0; x < premise.size(); x++) {
-                if (premise.get(x).getVariable() == assessmentPremVar) {
-                    /* Si le sous-domaine de la variable tel qu'incluse dans la
-                    (pseudo) prémisse contient la valeur associée à cette variable
-                    dans l'instance testée alors on retourne vrai. car nous sommes dans le cas d'une disjonction */
-                    if (premise.get(x).subDomainContains(assessment.get(i).getSubdomain())) {
+        for(Variable var : scope){
+            for(RestrictedDomain domain : assessment){
+                if(domain.getVariable() == var){
+                    if(terms.get(var).containsAll(domain.getSubdomain())){
                         return true;
                     }
                 }
             }
         }
-        
+        return false;
+    }
+
+    @Override
+    public boolean isSatisfiedBy(Map<Variable, String> assessment) {
+        for(Variable var : scope){
+            if (assessment.containsKey(var)){
+                if(terms.get(var).contains(assessment.get(var))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Set<Variable> getScope() {
+        return this.scope;
+    }
+
+    @Override
+    public List<RestrictedDomain> getDomains() {
+        List<RestrictedDomain> domains = new ArrayList();
+        for (Variable var : terms.keySet()) {
+            domains.add(new RestrictedDomain(var, var.getDomain()));
+        }
+        return domains;
+    }
+
+    @Override
+    public boolean filter(List<RestrictedDomain> toCheck, Map<Variable, Set<String>> variables) {
+        GeneralizedArcConsistency.enforceArcConsistency(this, new Domains(toCheck));
+        for (RestrictedDomain domain : toCheck) {
+            if (domain.getSubdomain() != variables.get(domain.getVariable())) {
+                return true;
+            }
+        }
         return false;
     }
 }
