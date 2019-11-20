@@ -109,16 +109,26 @@ public class PlanningProblemWithCost extends PlanningProblem {
         return getDijkstraPlan(father, plan, goals, distance);
     }
 
+    /**
+     * Récupération de la valeur minimale de notre liste d'etats
+     * @param stateSet
+     * @param valueMap
+     * @return 
+     */
     public static State argmin(Set<State> stateSet, Map<State, Integer> valueMap) {
         int minDistance = -1;
-        State node = null;
+        State node = null; // Noeud des visites à 0
         for (State state : stateSet) {
+            // Passe nécessairement ici au début
             if (minDistance < 0) {
                 minDistance = valueMap.get(state);
                 node = state;
             }
+            // On peut retourner notre etat courant si la distance est = à 0
             if (minDistance == 0) {
                 return node;
+            // Si la distance minimale de l'etat d'après est plus grande
+            // Que l'etat en cours on MAJ notre argmin en conséquence
             } else if (valueMap.get(state) < minDistance) {
                 minDistance = valueMap.get(state);
                 node = state;
