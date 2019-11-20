@@ -28,11 +28,24 @@ public class IncompatibilityConstraint implements Constraint {
             this.scope.add(var);
         }
     }
-
     @Override
     public boolean isSatisfiedBy(List<RestrictedDomain> assessment) {
         boolean isSatisfied = true;
-
+        Domains domains = new Domains(assessment);
+        boolean inScope = true;
+        for(Variable var : this.scope){
+            if (!domains.containsVar(var)){
+                inScope = false;
+            }
+        }
+        if(inScope){
+            isSatisfied = false;
+            for(Variable var : this.scope){
+                if(!terms.get(var).containsAll(domains.getDomain(var).getSubdomain())){
+                    return true;
+                }
+            }
+        }
         return isSatisfied;
     }
 
