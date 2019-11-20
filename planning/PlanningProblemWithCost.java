@@ -137,6 +137,16 @@ public class PlanningProblemWithCost extends PlanningProblem {
         return node;
     }
 
+    
+    /**
+     * Méthode permettant de récupérer la liste des plans pour atteindre un but
+     * Triée par ordre croissant
+     * @param father
+     * @param actions
+     * @param goals
+     * @param distance
+     * @return 
+     */
     public static Deque<Action> getDijkstraPlan(Map<State, State> father, Map<State, Action> actions,
             Set<State> goals, Map<State, Integer> distance) {
         Deque<Action> plan = new LinkedList();
