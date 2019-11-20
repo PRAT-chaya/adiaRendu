@@ -87,9 +87,14 @@ public class FrequentItemsetMiner {
             }
         }
         Set<Variable> tempScope = new HashSet();
+        // Parcours de nos ItemSets fréquents
         for (Set<Variable> itemset : frequentItemsets.keySet()) {
+            // Parcours des variables de notre scope (ensemble de variables "minées")
             for (Variable var : this.minedScope) {
+                // Si parmi les ItemSets minés on a notre variable
                 if (itemset.contains(var)) {
+                    // Et qu'on n'a pas déjà ajouté celle-ci au tempScope
+                    // On l'ajoute.
                     if (!tempScope.contains(var)) {
                         tempScope.add(var);
                     }
@@ -233,5 +238,4 @@ public class FrequentItemsetMiner {
         }
         return inTransaction;
     }
-
 }
