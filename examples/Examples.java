@@ -10,6 +10,7 @@ package examples;
 import representation.RestrictedDomain;
 import representation.IncompatibilityConstraint;
 import representation.Rule;
+import representation.Constraint;
 import representation.Variable;
 import java.util.ArrayList;
 import java.util.Arrays;
