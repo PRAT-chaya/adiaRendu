@@ -20,7 +20,7 @@ import ppc.BacktrackSearch;
 
 public class Examples {
 
-    private List<Rule> rules;
+    private List<Constraint> rules;
 
     public Examples() {
         this.rules = new ArrayList();
