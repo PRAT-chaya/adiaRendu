@@ -5,60 +5,73 @@
  * @author 21907858 : SABATIER Brian
  * 
  */
+public class IncompatibilityConstraint implements Constraint {
 
-package representation;
+    private Set<Variable> scope;
+    private Map<Variable, Set<String>> terms;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+    public IncompatibilityConstraint(Map<Variable, Set<String>> terms) {
+        this.terms = terms;
+        this.scope = new HashSet();
+        for (Variable var : terms.keySet()) {
+            scope.add(var);
+        }
+    }
 
-public class IncompatibilityConstraint extends Rule implements Constraint {
-
-    private Set<RestrictedDomain> scope;
-
-    public IncompatibilityConstraint(List<RestrictedDomain> premise, List<RestrictedDomain> conclusion) {
-        super(premise, conclusion);
+    public IncompatibilityConstraint(List<RestrictedDomain> terms) {
+        this.terms = new HashMap();
+        for (RestrictedDomain domain : terms) {
+            this.terms.put(domain.getVariable(), domain.getSubdomain());
+        }
+        this.scope = new HashSet();
+        for (Variable var : this.terms.keySet()) {
+            this.scope.add(var);
+        }
     }
 
     @Override
     public boolean isSatisfiedBy(List<RestrictedDomain> assessment) {
         boolean isSatisfied = true;
-        //Pour chaque variable de l'instance testée
-        for (int i = 0; i < assessment.size(); i++) {
-            Variable assessmentPremVar = assessment.get(i).getVariable();
-            //Si la prémisse est concernée par la variable
-            for (int x = 0; x < premise.size(); x++) {
-                if (premise.get(x).getVariable() == assessmentPremVar) {
-                    /*Si le sous-domaine de la variable tel qu'incluse dans la
-                (pseudo)prémisse contient la valeur associée à cette variable
-                dans l'instance testée*/
-                    if (premise.get(x).subDomainContains(assessment.get(i).getSubdomain())) {
-                        //Pour chaque variable de l'instance testée
-                        for (int j = 0; j < assessment.size(); j++) {
-                            Variable assessmentCclVar = assessment.get(j).getVariable();
-                            /*Si le domaine de la variable tel qu'incluse
-                        dans la (pseudo)conclusion contient la valeur associée
-                        à cette variable dans l'instance testée*/
-                            for (int y = 0; y < conclusion.size(); y++) {
-                                if (conclusion.get(y).getVariable() == assessmentCclVar) {
-                                    if (conclusion.get(y).subDomainContains(assessment.get(j).getSubdomain())) {
-                                        isSatisfied = false;
-                                    }
-                                }
-                            }
-                        }
-                    }
+
+        return isSatisfied;
+    }
+
+    @Override
+    public boolean isSatisfiedBy(Map<Variable, String> assessment) {
+        boolean isSatisfied = true;
+        if (assessment.keySet().containsAll(scope)) {
+            isSatisfied = false;
+            for (Variable var : scope) {
+                if (!this.terms.get(var).contains(assessment.get(var))) {
+                    isSatisfied = true;
                 }
             }
-
         }
-            return isSatisfied;
+        return isSatisfied;
     }
-    
+
     @Override
-    public boolean isSatisfiedBy(Map<Variable, String> assessment){
+    public Set<Variable> getScope() {
+        return this.scope;
+    }
+
+    @Override
+    public List<RestrictedDomain> getDomains() {
+        List<RestrictedDomain> domains = new ArrayList();
+        for (Variable var : terms.keySet()) {
+            domains.add(new RestrictedDomain(var, var.getDomain()));
+        }
+        return domains;
+    }
+
+    @Override
+    public boolean filter(List<RestrictedDomain> toCheck, Map<Variable, Set<String>> variables) {
+        GeneralizedArcConsistency.enforceArcConsistency(this, new Domains(toCheck));
+        for (RestrictedDomain domain : toCheck) {
+            if (domain.getSubdomain() != variables.get(domain.getVariable())) {
+                return true;
+            }
+        }
         return false;
     }
 }
