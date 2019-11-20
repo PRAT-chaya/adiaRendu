@@ -8,7 +8,8 @@ Le package examples contient quatres classes exécutables qui utilisent les clas
 
 La classe Test.java sert à démontrer que la classe Rule fonctionne conformement à l'énoncé du TP. Elle teste également notre implémentation de l'algorithme de Backtrack sur un problème court.
 La classe HealthCare.java génère un problème "médical" comme indiqué dans le sujet de TP sur la planninfication (on crée un état aléatoire, des médicaments expérimentaux, une affectation "final"). En exécutant le main de HealthCare, on génére le problème on teste les différents algorithmes de recherches de chemin vu en cours (dfs, bfs, Dijkstra, A*) dont les résultats s'affichent dans la console. Note sur Dijkstra : l'algorithme trouve bien un chemin avec les "sirops" (actions diminuant d'un seul niveau une variable) mais ne s'arrête pas lorsque que l'on utilise les actions ("médicaments") créées aléatoirement. On suppose que c'est le fait qu'un état final puisse aussi appliquer ces actions (préconditions vides) qui empêche Dijkstra de se terminer. On peut tester la différence en commentant la ligne (ne créant du coup que les sirops):
-\n-actions.addAll(hc.makeNMedecine(20, 3, 2));
+
+-actions.addAll(hc.makeNMedecine(20, 3, 2));
 
 D'autres classes de tests mineurs ont été implémentées dans les packages correspondant aux parties du TP étudiées.
 
