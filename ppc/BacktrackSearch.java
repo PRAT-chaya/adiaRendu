@@ -8,7 +8,7 @@
 
 package ppc;
 
-import java.util.ArrayList;
+allimport java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,10 +19,6 @@ import java.util.Set;
 import representation.*;
 import satisfiability.GeneralizedArcConsistency;
 
-/**
- *
- * @author ordinaute
- */
 public class BacktrackSearch {
 
     protected final Set<Constraint> constraints;
@@ -41,6 +37,11 @@ public class BacktrackSearch {
         }
     }
 
+     /**
+     * Méthode permettant de générer toutes les solutions d'un problème
+     * Pour peut qu'il ait des contraintes
+     * @return 
+     */
     public Set<List<RestrictedDomain>> allSolutions() {
         Map<Variable, String> partialAssignment = new HashMap();
         Deque<Variable> unassignedVariables = new LinkedList();
@@ -70,6 +71,10 @@ public class BacktrackSearch {
         return allSolutions;
     }
 
+    /**
+     * Méthode permettant de générer la prochaine solution
+     * @return ArrayList notre solution
+     */
     public List<RestrictedDomain> solution() {
         List<RestrictedDomain> solution = new ArrayList();
         Map<Variable, String> partialAssignment = new HashMap();
@@ -88,13 +93,22 @@ public class BacktrackSearch {
         return solution;
     }
 
+    /**
+     * Méthode permettant de générer la première solution trouvée d'un problème
+     * S'arrête à la première solution trouvée
+     * Pour peut qu'il ait des contraintes
+     * @return 
+     */
     public Map<Variable, String> solution(Map<Variable, String> partialAssignment,
             Deque<Variable> unassignedVariables) {
+        // Si il n'y a pas de variables non assignées
         if (unassignedVariables.isEmpty()) {
+            // Si l'assignation partielle satisfait la contrainte on la retourne
             if (satisfiesConstraints(partialAssignment)) {
                 return partialAssignment;
             }
         } else {
+            // Faire comme si la dequeue était une pile et on récupère sa première valeur
             Variable var = unassignedVariables.pop();
             for (String val : var.getDomain()) {
                 Deque<Variable> tempQ = new LinkedList();
@@ -108,6 +122,11 @@ public class BacktrackSearch {
         return null;
     }
 
+    /**
+     * Méthode permettant de générer toutes les solutions d'un problème
+     * Pour peut qu'il ait des contraintes
+     * @return 
+     */
     public Set<Map<Variable, String>> solutions(Map<Variable, String> partialAssignment,
             Deque<Variable> unassignedVariables, Map<Variable, Set<String>> domains, Set<Map<Variable, String>> accumulator) {
         //Condition d'arrêt de la récursion
