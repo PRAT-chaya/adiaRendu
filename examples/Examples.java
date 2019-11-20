@@ -140,7 +140,7 @@ public class Examples {
 
     }
 
-    public List<Rule> getRules() {
+    public List<Constraint> getRules() {
         return rules;
     }
 
